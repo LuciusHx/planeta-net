@@ -1,4 +1,5 @@
 import "./Telalogin.css";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { z } from "zod";
 import Logo from "../../components/Logo/Logo.jsx";
@@ -9,6 +10,8 @@ const loginSchema = z.object({
 });
 
 export default function TelaLogin() {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({ email: "", senha: "" });
   const [erros, setErros] = useState({});
 
@@ -31,6 +34,8 @@ export default function TelaLogin() {
     }
 
     setErros({});
+    //lembrar de colocar pra redirecionar pro dashboard
+    navigate("/");
     console.log("Login enviado:", formData);
   }
 
@@ -38,7 +43,7 @@ export default function TelaLogin() {
     <div className="tela-root flex">
       <div className="flex">
         <div>
-          <Logo />
+          <Logo size={300}/>
           <h1 className="brand">
             PLANETA NET <span className="dot-telecom">.TELECOM</span>
           </h1>
@@ -71,12 +76,6 @@ export default function TelaLogin() {
             Entrar
           </button>
         </form>
-      </div>
-
-      {/* ícones da direita */}
-      <div className="tela-options">
-        <div className="user-icon">{/* teu SVG aqui */}</div>
-        <div className="config-icon">{/* teu SVG aqui */}</div>
       </div>
     </div>
   );

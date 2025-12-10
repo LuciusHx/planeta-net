@@ -1,6 +1,7 @@
 import "./TelaInicialCliente.css";
 import SearchBox from "../../components/SearchBox/SearchBox.jsx";
 import Logo from "../../components/Logo/Logo.jsx";
+import { Link } from "react-router-dom";
 
 import userIcon from "../../assets/icons/User.svg";
 import configIcon from "../../assets/icons/Config.svg";
@@ -13,7 +14,7 @@ export default function TelaInicialCliente() {
   return (
     <div className="tela-root">
       <div className="tela-inner">
-        <div class="flex">
+        <div className="flex">
           <Logo />
           <h1 className="brand">
             PLANETA NET <span className="dot-telecom">.TELECOM</span>
@@ -26,9 +27,11 @@ export default function TelaInicialCliente() {
 
       <div className="tela-options">
         <div className="user-icon">
-          <i>
-            <img src={userIcon} alt="Usuário" className="icon-img" />
-          </i>
+          <Link to={"/login"}>
+            <i>
+              <img src={userIcon} alt="Usuário" className="icon-img" />
+            </i>
+          </Link>
         </div>
 
         <div className="config-icon">
