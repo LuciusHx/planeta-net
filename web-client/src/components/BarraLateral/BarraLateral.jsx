@@ -49,7 +49,6 @@ export default function BarraLateral() {
 
           <Divider className="divider" />
 
-          {/* Busca */}
           <ListItem className="list-item">
             <ListItemIcon>
               <img src={lupa} width={22} />
