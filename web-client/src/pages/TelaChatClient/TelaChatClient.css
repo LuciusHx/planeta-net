@@ -4,16 +4,8 @@
     #d9d9d9 24.01%,
     #c2aaac 66.69%,
     #d0aaae 90.75%
-  );
-  width: 100%;
-  min-height: 100vh;
+  ) !important; /* !important garante que o gradiente vença o fundo preto/branco */
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  color: #000;
-}
-
-
-.barra-lateral {
-  min-height: 100vh;
-  width: 25%;
-  background: linear-gradient(180deg, #8d212a 0%, #ae3841 100%);
 }

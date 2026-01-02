@@ -1,64 +1,101 @@
+import React, { useState } from 'react'; 
 import "./BarraLateral.css";
 import Logo from "../../components/Logo/Logo.jsx";
+import ListaConversa from "../ListaConversa/ListaConversa.jsx";
+import HomeIcon from '@mui/icons-material/Home';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-import hamburguer from "../../assets/icons/hamburguer.svg";
-import lupa from "../../assets/icons/Lupa.svg";
+import { 
+  Avatar, 
+  Box, 
+  Divider, 
+  Drawer, 
+  useTheme, 
+  Stack, 
+  Typography 
+} from "@mui/material";
 
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Drawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import Button from "@mui/material/Button";
+import FiltrosConversas from "../FiltrosConversas/FiltrosConversas.jsx";
 
-export default function BarraLateral() {
-  const [open, setOpen] = React.useState(true);
-
-  const toggleDrawer = () => setOpen(!open);
+// Adicionamos 'aoSelecionarChat' como parâmetro para avisar a página principal
+export default function BarraLateral({ aoSelecionarChat }) {
+  const theme = useTheme();
+  const [filtroSelecionado, setFiltroSelecionado] = useState('todos');
 
   return (
-    <Drawer
-      variant="permanent"
-      anchor="left"
-      open={open}
-      PaperProps={{
-        sx: {
-          width: open ? 300 : 70,
-          transition: "width 0.3s",
-          overflowX: "hidden",
-          background: "transparent",
-          border: "none",
+    <Drawer 
+      variant="permanent" 
+      className="BarraLateral"
+      sx={{
+        width: theme.spacing(35), // Define a largura do componente pai
+        flexShrink: 0,
+        height: '100vh',
+        '& .MuiDrawer-paper': {
+          width: theme.spacing(35),
+          display: 'flex',
+          flexDirection: 'column',
+          boxSizing: 'border-box',
+          borderRight: 'none',
+          position: 'relative', // Importante para não flutuar por cima do chat
         },
       }}
     >
-      <Box className="bar" sx={{ width: open ? 300 : 70 }}>
-        <List>
-          <ListItem className="list-head">
-            {open && <Logo />}
+      {/* TOPO: Logo e Filtro */}
+      <Box 
+        sx={{ 
+          width: '100%', 
+          height: theme.spacing(13), 
+          display: 'flex', 
+          flexDirection: 'row', 
+          alignItems: 'center', 
+          justifyContent: 'space-between', 
+          px: 2 
+        }}
+      >
+        <Avatar sx={{ width: 60, height: 60, bgcolor: 'transparent' }}>
+          <Logo />
+        </Avatar>
 
-            <Button
-              className="btn-hamburguer"
-              onClick={toggleDrawer}
-              style={{ minWidth: 0 }}
-            >
-              <img src={hamburguer} width={26} />
-            </Button>
-          </ListItem>
+        <Box>
+          <FiltrosConversas 
+            aoSelecionarFiltro={(f) => setFiltroSelecionado(f)}
+            filtroAtivo={filtroSelecionado} 
+          />
+        </Box>
+      </Box>
 
-          <Divider className="divider" />
+      <Divider sx={{ borderColor: 'rgba(238, 230, 230, 0.5)', mb: 2, mx: 2 }} />
 
-          <ListItem className="list-item">
-            <ListItemIcon>
-              <img src={lupa} width={22} />
-            </ListItemIcon>
+      {/* MEIO: Lista de Conversas */}
+      <Box sx={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
+        {/* Agora a ListaConversa também recebe a função de clique */}
+        <ListaConversa 
+          filtro={filtroSelecionado} 
+          aoClicarNoChat={aoSelecionarChat} 
+        />
+      </Box>
 
-            {open && (
-              <input className="sidebar-input" placeholder="Buscar chats" />
-            )}
-          </ListItem>
-        </List>
+      {/* RODAPÉ */}
+      <Box sx={{ mt: 'auto', p: 2 }}> 
+        <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.5)', mb: 2, mx: 1 }} />
+        
+        <Stack 
+          direction="row" 
+          spacing={4} 
+          justifyContent="space-between" 
+          alignItems="center"
+          sx={{ px: 1 }}
+        >
+          <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', color: 'white', '&:hover': { opacity: 0.8 } }}>
+            <HomeIcon sx={{ mr: 0.5 }} />
+            <Typography variant="body2">Início</Typography>
+          </Box>
+
+          <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', color: 'white', '&:hover': { opacity: 0.8 } }}>
+            <MoreVertIcon sx={{ mr: 0.5 }} />
+            <Typography variant="body2">Mais</Typography>
+          </Box>
+        </Stack>
       </Box>
     </Drawer>
   );
