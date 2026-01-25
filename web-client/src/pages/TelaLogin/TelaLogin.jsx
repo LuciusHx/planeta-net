@@ -51,7 +51,7 @@ export default function TelaLogin() {
     return response.json();
     })
     .then((data) => {
-      alert("Login realizado com sucesso");
+      window.alert("Login realizado com sucesso");
       console.log("Resposta do backend:", data);
       
       
