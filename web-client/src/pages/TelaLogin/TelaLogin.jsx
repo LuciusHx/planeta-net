@@ -39,23 +39,25 @@ export default function TelaLogin() {
     console.log("Login enviado:", formData);
 
     fetch("http://localhost:8080/api/auth/login", {
-      mothod: "POST",
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formData),
     })
     .then(async (response) => {
     if (!response.ok) {
+      window.alert("Email ou senha inválidos");
       throw new Error("Email ou senha inválidos");
     }
     return response.json();
     })
     .then((data) => {
+      alert("Login realizado com sucesso");
       console.log("Resposta do backend:", data);
-
-      // exemplo:
+      
+      
       localStorage.setItem("token", data.token);
 
-      navigate("/");
+      navigate("/home");
     })
     .catch(() => {
       console.error( {password: "Email ou senha inválidos"});
