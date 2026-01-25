@@ -9,6 +9,7 @@ import configIcon from "../../assets/icons/Config.svg";
 export default function TelaInicialCliente() {
   function handleSend(text) {
     console.log("Enviar:", text);
+    
   }
 
   return (

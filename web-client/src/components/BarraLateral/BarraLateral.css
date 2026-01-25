@@ -1,5 +1,53 @@
-.BarraLateral .MuiDrawer-paper{
-background: linear-gradient(to top,#AE3841, #8D212A);
+.barra-lateral {
+  width: 280px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #ae3841 0%, #8d212a 100%);
+  color: white;
+  border-bottom: 1px solid white;
+}
 
+/* TOPO */
+.barra-topo {
+  height: 104px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
+.logo-wrapper {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* MEIO */
+.barra-meio {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 8px 0;
+}
+
+.acoes {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px;
+}
+
+.acao {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.acao:hover {
+  opacity: 1;
 }
