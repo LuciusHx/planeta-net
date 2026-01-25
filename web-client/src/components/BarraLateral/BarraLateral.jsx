@@ -38,11 +38,7 @@ export default function BarraLateral() {
           <ListItem className="list-head">
             {open && <Logo />}
 
-            <Button
-              className="btn-hamburguer"
-              onClick={toggleDrawer}
-              style={{ minWidth: 0 }}
-            >
+            <Button onClick={toggleDrawer} style={{ minWidth: 0 }}>
               <img src={hamburguer} width={26} />
             </Button>
           </ListItem>

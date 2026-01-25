@@ -1,10 +1,14 @@
 import "./Dashboard.css";
+import "react-circular-progressbar/dist/styles.css";
 
 import NavBar from "../../components/Navbar/NavBar.jsx";
+import { CircularProgressbar } from "react-circular-progressbar";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
 
 import SmartToyIcon from "@mui/icons-material/SmartToy";
 import MovingIcon from "@mui/icons-material/Moving";
@@ -36,14 +40,14 @@ export default function Dashboard() {
       <div className="container flex">
         <div className="cards flex">
           {cards.map((card) => (
-            <div className="card-container">
-              <Card key={card.title}>
+            <div className="card-container" key={card.title}>
+              <Card>
                 <CardContent className="card-content flex">
                   <card.icon sx={{ fontSize: 40 }} />
                   <Typography variant="h7">{card.title}</Typography>
                 </CardContent>
               </Card>
-              <Card key={card.title}>
+              <Card>
                 <CardContent className="card-data flex">
                   <Typography>{card.data}</Typography>
                 </CardContent>
@@ -51,7 +55,25 @@ export default function Dashboard() {
             </div>
           ))}
         </div>
-      <div></div>
+        <div className="paper-section">
+          <Box>
+            <Paper
+              className="paper"
+              elevation={3}
+              sx={{
+                width: "100%",
+                height: 200,
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                p: 2,
+                background: "rgba(230, 221, 221, 1)",
+              }}
+            >
+              <div className="prog-bar"></div>
+            </Paper>
+          </Box>
+        </div>
       </div>
     </div>
   );
