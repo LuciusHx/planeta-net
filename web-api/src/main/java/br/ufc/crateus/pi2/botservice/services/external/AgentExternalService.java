@@ -22,7 +22,38 @@ public class AgentExternalService
     @Autowired
     private ChatRepository chatRepository;
 
+
     public AgentHandledResponseDto sendMessage(Long chatId, SendMessageCommand command)
+    {
+        // 1. Criar o objeto fake
+        Chat fakeChat = new Chat();
+        fakeChat.setId(1L);
+        fakeChat.setSummary("Resumo fake");
+
+        // 2. Chamar o agente externo (Certifique-se que o container 'agente' está rodando)
+        var response = webClient.post()
+                        .uri(BASE_URL + "/prompt-agent")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .bodyValue(command)
+                        .retrieve()
+                        .bodyToMono(AgentResponseDto.class)
+                        .block();
+
+        // 3. Usar o fakeChat para as atualizações
+        if(fakeChat.getTitle() == null || fakeChat.getTitle().isBlank()) {
+            fakeChat.setTitle(response.getSummary());
+        }
+
+        var handledResponse = handleResponseType(fakeChat, response);
+
+        // 4. COMENTE o save por enquanto! 
+        // Como o fakeChat não existe no banco, o JPA pode dar erro ao tentar salvar.
+        // chatRepository.save(fakeChat); 
+
+        return handledResponse;
+    }
+
+    /*public AgentHandledResponseDto sendMessage(Long chatId, SendMessageCommand command)
     {
         var chat = chatRepository.findById(chatId);
 
@@ -48,9 +79,17 @@ public class AgentExternalService
 
         chatRepository.save(chatToUpdate);
         return handledResponse;
-    }
+    }*/
+
 
     private AgentHandledResponseDto handleResponseType(Chat chat, AgentResponseDto response)
+    {
+        // Força o tipo para 'chat' para evitar cair no 'consulta_plano' que exige banco de dados
+        chat.setSummary(response.getSummary());
+        return AgentHandledResponseDto.chat(response);
+    }
+
+    /*private AgentHandledResponseDto handleResponseType(Chat chat, AgentResponseDto response)
     {
         var type = String.valueOf(response.getClassification().get("type"));
 
@@ -68,5 +107,5 @@ public class AgentExternalService
             default:
                 return null;
         }
-    }
+    }*/
 }

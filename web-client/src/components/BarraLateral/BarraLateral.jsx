@@ -1,102 +1,51 @@
-import React, { useState } from 'react'; 
+import React, { useState } from "react";
 import "./BarraLateral.css";
+
 import Logo from "../../components/Logo/Logo.jsx";
 import ListaConversa from "../ListaConversa/ListaConversa.jsx";
-import HomeIcon from '@mui/icons-material/Home';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-
-import { 
-  Avatar, 
-  Box, 
-  Divider, 
-  Drawer, 
-  useTheme, 
-  Stack, 
-  Typography 
-} from "@mui/material";
-
 import FiltrosConversas from "../FiltrosConversas/FiltrosConversas.jsx";
 
-// Adicionamos 'aoSelecionarChat' como parâmetro para avisar a página principal
+import { FaHome, FaEllipsisV } from "react-icons/fa";
+
 export default function BarraLateral({ aoSelecionarChat }) {
-  const theme = useTheme();
-  const [filtroSelecionado, setFiltroSelecionado] = useState('todos');
+  const [filtroSelecionado, setFiltroSelecionado] = useState("todos");
 
   return (
-    <Drawer 
-      variant="permanent" 
-      className="BarraLateral"
-      sx={{
-        width: theme.spacing(35), // Define a largura do componente pai
-        flexShrink: 0,
-        height: '100vh',
-        '& .MuiDrawer-paper': {
-          width: theme.spacing(35),
-          display: 'flex',
-          flexDirection: 'column',
-          boxSizing: 'border-box',
-          borderRight: 'none',
-          position: 'relative', // Importante para não flutuar por cima do chat
-        },
-      }}
-    >
-      {/* TOPO: Logo e Filtro */}
-      <Box 
-        sx={{ 
-          width: '100%', 
-          height: theme.spacing(13), 
-          display: 'flex', 
-          flexDirection: 'row', 
-          alignItems: 'center', 
-          justifyContent: 'space-between', 
-          px: 2 
-        }}
-      >
-        <Avatar sx={{ width: 60, height: 60, bgcolor: 'transparent' }}>
+    <aside className="barra-lateral">
+      {/* TOPO */}
+      <div className="barra-topo">
+        <div className="logo-wrapper">
           <Logo />
-        </Avatar>
+        </div>
 
-        <Box>
-          <FiltrosConversas 
-            aoSelecionarFiltro={(f) => setFiltroSelecionado(f)}
-            filtroAtivo={filtroSelecionado} 
-          />
-        </Box>
-      </Box>
-
-      <Divider sx={{ borderColor: 'rgba(238, 230, 230, 0.5)', mb: 2, mx: 2 }} />
-
-      {/* MEIO: Lista de Conversas */}
-      <Box sx={{ flex: 1, overflowY: 'auto', overflowX: 'hidden' }}>
-        {/* Agora a ListaConversa também recebe a função de clique */}
-        <ListaConversa 
-          filtro={filtroSelecionado} 
-          aoClicarNoChat={aoSelecionarChat} 
+        <FiltrosConversas
+          filtroAtivo={filtroSelecionado}
+          aoSelecionarFiltro={setFiltroSelecionado}
         />
-      </Box>
+      </div>
+
+      {/* MEIO */}
+      <div className="barra-meio">
+        <ListaConversa
+          filtro={filtroSelecionado}
+          aoClicarNoChat={aoSelecionarChat}
+        />
+      </div>
 
       {/* RODAPÉ */}
-      <Box sx={{ mt: 'auto', p: 2 }}> 
-        <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.5)', mb: 2, mx: 1 }} />
-        
-        <Stack 
-          direction="row" 
-          spacing={4} 
-          justifyContent="space-between" 
-          alignItems="center"
-          sx={{ px: 1 }}
-        >
-          <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', color: 'white', '&:hover': { opacity: 0.8 } }}>
-            <HomeIcon sx={{ mr: 0.5 }} />
-            <Typography variant="body2">Início</Typography>
-          </Box>
+      <div className="barra-rodape">
+        <div className="acoes">
+          <div className="acao">
+            <FaHome />
+            <span>Início</span>
+          </div>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer', color: 'white', '&:hover': { opacity: 0.8 } }}>
-            <MoreVertIcon sx={{ mr: 0.5 }} />
-            <Typography variant="body2">Mais</Typography>
-          </Box>
-        </Stack>
-      </Box>
-    </Drawer>
+          <div className="acao">
+            <FaEllipsisV />
+            <span>Mais</span>
+          </div>
+        </div>
+      </div>
+    </aside>
   );
 }
