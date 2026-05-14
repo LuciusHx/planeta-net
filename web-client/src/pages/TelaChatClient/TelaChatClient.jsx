@@ -5,12 +5,13 @@ import LayoutChat from '../../components/LayoutChat/LayoutChat.jsx';
 import "./TelaChatClient.css"; 
 
 export default function TelaChatClient() {
-  const [conversaSelecionada, setConversaSelecionada] = useState(null);
+  const [conversaSelecionada, setConversaSelecionada] = useState(null); // conver. selec. aparece nulo. Por isso no começo ele aparece a msg pra selecionar uma conversa
   const [conversas, setConversas] = useState([]);
 
-  const [filtro, setFiltro] = useState('todos');
+  const [filtro, setFiltro] = useState('todos'); //mudar filtro, valor inicial == todos; 
 
   // Simula o carregamento inicial das conversas (resumo)
+  // parte da barra lateral que simula a conversa minimizada. 
   useEffect(() => {
     setConversas([
       { id: 1, nome: "João", ultimaMsg: "Olá", categoria: "todos", horario: "12:50", foto: "" },
@@ -20,17 +21,17 @@ export default function TelaChatClient() {
 
   // Filtra a lista de conversas pela categoria selecionada
   const conversasFiltradas = conversas.filter(
-    c => filtro === 'todos' || c.categoria === filtro
+    categoria => filtro === 'todos' || categoria.categoria === filtro
   );
 
   return (
     <Box className="container" sx={{ display: 'flex', width: '100vw', height: '100vh', overflow: 'hidden' }}>
       
       <BarraLateral 
-        aoSelecionarChat={setConversaSelecionada} 
+        mudarChatSelecionado={setConversaSelecionada} 
         conversas={conversasFiltradas} 
         filtroAtivo={filtro} 
-        aoSelecionarFiltro={setFiltro} 
+        mudarFiltroSelecionado={setFiltro} 
       />
 
       <Box sx={{ flex: 1, height: '100vh', position: 'relative', bgcolor: 'transparent' }}>
